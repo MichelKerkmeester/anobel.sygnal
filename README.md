@@ -1,4 +1,4 @@
-# Sygnal Framework for Webflow
+# Sygnal Framework
 
 See the official SSE docs here 
 https://engine.sygnal.com/
