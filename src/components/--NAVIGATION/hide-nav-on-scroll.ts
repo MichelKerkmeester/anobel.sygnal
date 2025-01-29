@@ -1,62 +1,74 @@
 // Navigation
 // Hide Nav on Scroll
+import gsap from "gsap";
 
 export class HideNav {
-  // Tracks the previous scroll position to determine direction
+  // Track the last scroll position
   private lastScrollTop: number = 0;
-
-  // Reference to the navigation bar element
   private navbar: HTMLElement | null = null;
-
-  // Amount user must scroll before triggering hide/show
+  // Minimum scroll amount before hiding/showing
   private readonly scrollThreshold: number = 50;
-
-  // Screen width breakpoint for mobile devices (in pixels)
+  // Adjust this based on your mobile breakpoint
   private readonly mobileBreakpoint: number = 768;
 
   constructor() {
-    // Wait for DOM to be ready before initializing
-    document.addEventListener("DOMContentLoaded", () => {
-      this.navbar = document.querySelector(".nav--bar");
-
-      if (!this.navbar) {
-        console.error("Navigation bar element not found!");
-        return;
-      }
-
-      // Add smooth transition to the navbar
-      this.navbar.style.transition = "transform 0.3s ease-in-out";
-
-      // Add scroll event listener
-      window.addEventListener("scroll", this.handleScroll, { passive: true });
-    });
+    // Initialize after DOM is loaded
+    document.addEventListener("DOMContentLoaded", () => this.init());
   }
 
-  // Handles scroll events and determines whether to show/hide nav
-  private handleScroll = (): void => {
-    if (!this.navbar) return;
+  private init(): void {
+    this.navbar = document.querySelector(".nav--bar");
 
+    if (!this.navbar) {
+      console.error("Navigation bar element not found!");
+      return;
+    }
+
+    // Remove the CSS transition since we'll use GSAP
+    this.navbar.style.transition = "";
+
+    // Set initial GSAP state
+    gsap.set(this.navbar, {
+      y: 0,
+      force3D: true, // Better performance for transforms
+    });
+
+    this.setupScrollListener();
+  }
+
+  private handleScroll = (): void => {
     // Only run on desktop
     if (window.innerWidth <= this.mobileBreakpoint) return;
 
-    // Get current scroll position
     const currentScroll =
       window.pageYOffset || document.documentElement.scrollTop;
 
-    // Skip if haven't scrolled past threshold
+    // Check if user has scrolled more than threshold
     if (Math.abs(this.lastScrollTop - currentScroll) <= this.scrollThreshold)
       return;
 
-    // Hide nav when scrolling down and not at the top
+    // Scrolling down & not at the top
     if (currentScroll > this.lastScrollTop && currentScroll > 50) {
-      this.navbar.style.transform = "translateY(-200%)";
+      gsap.to(this.navbar, {
+        y: "-100%",
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
     }
-    // Show nav when scrolling up
+    // Scrolling up
     else {
-      this.navbar.style.transform = "translateY(0)";
+      gsap.to(this.navbar, {
+        y: "0%",
+        duration: 0.3,
+        ease: "power2.out",
+      });
     }
 
-    // Update last scroll position
     this.lastScrollTop = currentScroll;
   };
+
+  private setupScrollListener(): void {
+    // Add scroll event listener with passive flag for better performance
+    window.addEventListener("scroll", this.handleScroll, { passive: true });
+  }
 }
