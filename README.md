@@ -1,6 +1,8 @@
+Sygnal Framework for Webflow
+
 # Setup
 
-See the official SSE docs here- 
+See the official SSE docs here 
 https://engine.sygnal.com/
 
 ## package.json
