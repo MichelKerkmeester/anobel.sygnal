@@ -34,7 +34,7 @@
   "dependencies": {
     "@sygnal/sse": "^0.2.0",
     "glob": "^10.4.2",
-    "gsap": "^3.12.5",
+    "gsap": "^3.12.7",
     "js-cookie": "^3.0.5"
   }
 }
