@@ -22,19 +22,15 @@
         }
         this.lastScrollTop = currentScroll;
       };
-      document.addEventListener("DOMContentLoaded", () => this.init());
-    }
-    init() {
-      this.navbar = document.querySelector(".nav--bar");
-      if (!this.navbar) {
-        console.error("Navigation bar element not found!");
-        return;
-      }
-      this.navbar.style.transition = "transform 0.3s ease-in-out";
-      this.setupScrollListener();
-    }
-    setupScrollListener() {
-      window.addEventListener("scroll", this.handleScroll, { passive: true });
+      document.addEventListener("DOMContentLoaded", () => {
+        this.navbar = document.querySelector(".nav--bar");
+        if (!this.navbar) {
+          console.error("Navigation bar element not found!");
+          return;
+        }
+        this.navbar.style.transition = "transform 0.3s ease-in-out";
+        window.addEventListener("scroll", this.handleScroll, { passive: true });
+      });
     }
   };
 })();

@@ -16,31 +16,27 @@ export class HideNav {
 
   constructor() {
     // Wait for DOM to be ready before initializing
-    document.addEventListener("DOMContentLoaded", () => this.init());
-  }
+    document.addEventListener("DOMContentLoaded", () => {
+      this.navbar = document.querySelector(".nav--bar");
 
-  private init(): void {
-    // Get reference to navigation bar
-    this.navbar = document.querySelector(".nav--bar");
+      if (!this.navbar) {
+        console.error("Navigation bar element not found!");
+        return;
+      }
 
-    // Exit if navigation bar isn't found
-    if (!this.navbar) {
-      console.error("Navigation bar element not found!");
-      return;
-    }
+      // Add smooth transition to the navbar
+      this.navbar.style.transition = "transform 0.3s ease-in-out";
 
-    // Add smooth transition effect to transform property
-    this.navbar.style.transition = "transform 0.3s ease-in-out";
-
-    // Set up scroll event listener
-    this.setupScrollListener();
+      // Add scroll event listener
+      window.addEventListener("scroll", this.handleScroll, { passive: true });
+    });
   }
 
   // Handles scroll events and determines whether to show/hide nav
   private handleScroll = (): void => {
     if (!this.navbar) return;
 
-    // Don't hide nav on mobile devices
+    // Only run on desktop
     if (window.innerWidth <= this.mobileBreakpoint) return;
 
     // Get current scroll position
@@ -63,10 +59,4 @@ export class HideNav {
     // Update last scroll position
     this.lastScrollTop = currentScroll;
   };
-
-  // Sets up scroll event listener with performance optimization
-  private setupScrollListener(): void {
-    // Use passive listener for better scroll performance
-    window.addEventListener("scroll", this.handleScroll, { passive: true });
-  }
 }
