@@ -1,9 +1,9 @@
-
 /*
  * Site
  */
 
 import { IModule, Page } from "@sygnal/sse";
+import { Navigation } from "./components/--NAVIGATION/dropdown-menu";
 
 // import gsap from 'gsap'; 
  
@@ -28,9 +28,9 @@ export class Site implements IModule {
    * Exec code runs after the DOM has processed. 
    */
   exec() {
-
     // Put your site-level custom code here
     // it will have full access to the DOM 
+    new Navigation();
 
   }
 

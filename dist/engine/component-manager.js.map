@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/engine/component-manager.ts"],
+  "sourcesContent": ["export class ComponentManager {\n    private components: Map<string, any[]> = new Map();\n  \n    // Method to register a component with a type\n    registerComponent(type: string, component: any): void {\n      if (!this.components.has(type)) {\n        this.components.set(type, []);\n      }\n      this.components.get(type)?.push(component);\n    }\n  \n    // Method to retrieve all components of a specific type\n    getComponentsByType<T>(type: string): T[] {\n      return this.components.get(type) || [];\n    }\n  }\n  "],
+  "mappings": ";;;AAAO,MAAM,mBAAN,MAAuB;AAAA,IAAvB;AACH,WAAQ,aAAiC,oBAAI,IAAI;AAAA;AAAA,IAGjD,kBAAkB,MAAc,WAAsB;AAJ1D;AAKM,UAAI,CAAC,KAAK,WAAW,IAAI,IAAI,GAAG;AAC9B,aAAK,WAAW,IAAI,MAAM,CAAC,CAAC;AAAA,MAC9B;AACA,iBAAK,WAAW,IAAI,IAAI,MAAxB,mBAA2B,KAAK;AAAA,IAClC;AAAA,IAGA,oBAAuB,MAAmB;AACxC,aAAO,KAAK,WAAW,IAAI,IAAI,KAAK,CAAC;AAAA,IACvC;AAAA,EACF;",
+  "names": []
+}

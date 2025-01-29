@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/pages/home.ts"],
+  "sourcesContent": ["\n/*\n * Page | Home\n */\n\nimport { IModule } from \"@sygnal/sse\";\n \n\nexport class HomePage implements IModule {\n\n  constructor() {\n  }\n\n  setup() {\n        \n  }\n\n  exec() {\n\n  }\n\n}\n"],
+  "mappings": ";;;AAQO,MAAM,WAAN,MAAkC;AAAA,IAEvC,cAAc;AAAA,IACd;AAAA,IAEA,QAAQ;AAAA,IAER;AAAA,IAEA,OAAO;AAAA,IAEP;AAAA,EAEF;",
+  "names": []
+}
