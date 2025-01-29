@@ -20872,12 +20872,24 @@
       });
     }
     init() {
-      this.navbar = document.querySelector(".nav--bar");
+      var _a;
+      this.navbar = document.querySelector(
+        ".navbar, .nav-bar, [data-animation='navbar']"
+      );
       if (!this.navbar) {
-        console.error("Navigation bar element not found!");
+        console.warn(
+          "First attempt to find navbar failed, trying secondary selectors..."
+        );
+        this.navbar = document.querySelector("nav, .w-nav, .navigation");
+      }
+      if (!this.navbar) {
+        console.error(
+          "Navigation bar element not found! Available classes:",
+          (_a = document.querySelector("nav")) == null ? void 0 : _a.classList
+        );
         return;
       }
-      this.navbar.style.transition = "";
+      this.navbar.style.transition = "none";
       gsapWithCSS.set(this.navbar, {
         y: 0,
         force3D: true
@@ -21238,10 +21250,12 @@
       Page.loadEngineCSS("site.css");
     }
     exec() {
+      console.log("Site: Initializing components...");
       this.hideNav = new HideNav();
       this.dropdownMenu = new DropdownMenu();
       this.languageSelector = new LanguageSelector();
       this.megaMenu = new MegaMenu();
+      console.log("Site: Components initialized");
     }
   };
 })();

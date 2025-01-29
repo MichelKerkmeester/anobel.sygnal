@@ -29,10 +29,14 @@ export class Site implements IModule {
    * Exec code runs after the DOM has processed.
    */
   exec() {
+    console.log("Site: Initializing components...");
+
     // Initialize all navigation components
     this.hideNav = new HideNav();
     this.dropdownMenu = new DropdownMenu();
     this.languageSelector = new LanguageSelector();
     this.megaMenu = new MegaMenu();
+
+    console.log("Site: Components initialized");
   }
 }

@@ -28,20 +28,34 @@ export class HideNav {
   }
 
   private init(): void {
-    this.navbar = document.querySelector(".nav--bar");
+    // Try Webflow's default navigation classes
+    this.navbar = document.querySelector(
+      ".navbar, .nav-bar, [data-animation='navbar']"
+    );
 
     if (!this.navbar) {
-      console.error("Navigation bar element not found!");
+      console.warn(
+        "First attempt to find navbar failed, trying secondary selectors..."
+      );
+      // Try secondary selectors specific to the Nobel site
+      this.navbar = document.querySelector("nav, .w-nav, .navigation");
+    }
+
+    if (!this.navbar) {
+      console.error(
+        "Navigation bar element not found! Available classes:",
+        document.querySelector("nav")?.classList
+      );
       return;
     }
 
     // Remove the CSS transition since we'll use GSAP
-    this.navbar.style.transition = "";
+    this.navbar.style.transition = "none";
 
     // Set initial GSAP state
     gsap.set(this.navbar, {
       y: 0,
-      force3D: true, // Better performance for transforms
+      force3D: true,
     });
 
     this.setupScrollListener();
