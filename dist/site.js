@@ -16656,7 +16656,7 @@
         if (Math.abs(this.lastScrollTop - currentScroll) <= 20)
           return;
         if (currentScroll > this.lastScrollTop && currentScroll > 30) {
-          this.navbar.style.transform = "translateY(-100%)";
+          this.navbar.style.transform = "translateY(-200%)";
         } else {
           this.navbar.style.transform = "translateY(0)";
         }

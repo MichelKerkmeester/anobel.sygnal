@@ -67,7 +67,7 @@ export class HideNav {
 
     // Scrolling down & not at the top
     if (currentScroll > this.lastScrollTop && currentScroll > 30) {
-      this.navbar.style.transform = "translateY(-100%)";
+      this.navbar.style.transform = "translateY(-200%)";
     }
     // Scrolling up
     else {
