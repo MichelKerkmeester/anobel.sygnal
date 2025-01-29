@@ -12,8 +12,19 @@ export class HideNav {
   private readonly mobileBreakpoint: number = 768;
 
   constructor() {
-    // Initialize after DOM is loaded
-    document.addEventListener("DOMContentLoaded", () => this.init());
+    // Initialize immediately and listen for Sygnal page changes
+    this.init();
+
+    // Listen for Sygnal page transitions
+    document.addEventListener("sygnal:load", () => {
+      this.init();
+    });
+
+    // Backup: also listen for Webflow page transitions
+    window.Webflow &&
+      window.Webflow.push(() => {
+        this.init();
+      });
   }
 
   private init(): void {

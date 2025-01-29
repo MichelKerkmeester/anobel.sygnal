@@ -4221,7 +4221,13 @@
         }
         this.lastScrollTop = currentScroll;
       };
-      document.addEventListener("DOMContentLoaded", () => this.init());
+      this.init();
+      document.addEventListener("sygnal:load", () => {
+        this.init();
+      });
+      window.Webflow && window.Webflow.push(() => {
+        this.init();
+      });
     }
     init() {
       this.navbar = document.querySelector(".nav--bar");
