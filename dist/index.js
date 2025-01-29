@@ -25870,6 +25870,7 @@
   // src/pages/home.ts
   var HomePage = class {
     constructor() {
+      this.marquee = null;
     }
     setup() {
     }
@@ -25881,6 +25882,7 @@
   // src/pages/diensten.ts
   var DienstenPage = class {
     constructor() {
+      this.marquee = null;
     }
     setup() {
     }

@@ -4579,6 +4579,7 @@
   // src/pages/diensten.ts
   var DienstenPage = class {
     constructor() {
+      this.marquee = null;
     }
     setup() {
     }
