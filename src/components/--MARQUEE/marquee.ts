@@ -1,39 +1,44 @@
 // Marquee: Clients
 // Swiper
 
-import Swiper from "swiper";
-import { Autoplay } from "swiper/modules";
+import gsap from "gsap";
 
 export class Marquee {
-  private swiper: Swiper | null = null;
+  // Track all marquee instances on the page
+  private marquees: HTMLElement[] = [];
 
   constructor() {
-    this.initSwiper();
-  }
+    // Find all marquee elements with the correct class
+    this.marquees = Array.from(document.querySelectorAll(".marquee--track"));
 
-  private initSwiper(): void {
-    const track = document.querySelector(".marquee--track");
-    if (!track) {
-      console.error("Marquee track element not found");
+    if (this.marquees.length === 0) {
+      console.warn("No marquee elements found on page");
       return;
     }
 
-    this.swiper = new Swiper(".marquee--track", {
-      modules: [Autoplay],
-      wrapperClass: "marquee--container", // Wrapper container class
-      slideClass: "marquee--item", // Individual slide class
-      spaceBetween: 0, // No spacing (handled by CSS)
-      allowTouchMove: false, // Disable touch/drag
-      a11y: {
-        enabled: false,
-      },
-      speed: 5000, // Animation duration in ms
-      loop: true, // Enable infinite loop
-      slidesPerView: "auto", // Auto-fit slides
-      autoplay: {
-        delay: 0, // No transition delay
-        disableOnInteraction: false, // Keep running after interaction
-      },
+    this.init();
+  }
+
+  private init(): void {
+    this.marquees.forEach((marquee) => {
+      // Get the content wrapper inside the track
+      const content = marquee.querySelector(".marquee--content");
+      if (!content) {
+        console.warn("Marquee content element not found");
+        return;
+      }
+
+      // Clone the content for infinite scroll effect
+      const clone = content.cloneNode(true);
+      marquee.appendChild(clone);
+
+      // Set up the animation
+      gsap.to(marquee, {
+        x: "-50%",
+        duration: 20,
+        repeat: -1,
+        ease: "none",
+      });
     });
   }
 }
