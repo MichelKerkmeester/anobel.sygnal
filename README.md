@@ -1,6 +1,6 @@
-# Setup
+# Sygnal Framework
 
-See the official SSE docs here- 
+See the official SSE docs here 
 https://engine.sygnal.com/
 
 ## package.json
