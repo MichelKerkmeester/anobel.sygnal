@@ -49,44 +49,29 @@ export class HideNav {
       return;
     }
 
-    // Remove the CSS transition since we'll use GSAP
-    this.navbar.style.transition = "none";
-
-    // Set initial GSAP state
-    gsap.set(this.navbar, {
-      y: 0,
-      force3D: true,
-    });
+    // Set up smooth CSS transition instead of GSAP
+    this.navbar.style.transform = "translateY(0)";
+    this.navbar.style.transition = "transform 0.15s ease";
 
     this.setupScrollListener();
   }
 
   private handleScroll = (): void => {
-    // Only run on desktop
-    if (window.innerWidth <= this.mobileBreakpoint) return;
+    if (!this.navbar) return;
 
     const currentScroll =
       window.pageYOffset || document.documentElement.scrollTop;
 
-    // Check if user has scrolled more than threshold
-    if (Math.abs(this.lastScrollTop - currentScroll) <= this.scrollThreshold)
-      return;
+    // Reduced threshold for faster response
+    if (Math.abs(this.lastScrollTop - currentScroll) <= 20) return;
 
     // Scrolling down & not at the top
-    if (currentScroll > this.lastScrollTop && currentScroll > 50) {
-      gsap.to(this.navbar, {
-        y: "-100%",
-        duration: 0.3,
-        ease: "power2.inOut",
-      });
+    if (currentScroll > this.lastScrollTop && currentScroll > 30) {
+      this.navbar.style.transform = "translateY(-100%)";
     }
     // Scrolling up
     else {
-      gsap.to(this.navbar, {
-        y: "0%",
-        duration: 0.3,
-        ease: "power2.out",
-      });
+      this.navbar.style.transform = "translateY(0)";
     }
 
     this.lastScrollTop = currentScroll;
