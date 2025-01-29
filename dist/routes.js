@@ -4683,6 +4683,104 @@
     }
   };
 
+  // src/components/--NAVIGATION/language-selector.ts
+  var LanguageSelector = class {
+    constructor() {
+      this.languageBtn = document.querySelector(".language--btn-w");
+      this.languageDropdown = document.querySelector(".language--dropdown-w");
+      this.languageIcon = document.querySelector(".icon--svg.is--language");
+      if (!this.languageBtn || !this.languageDropdown || !this.languageIcon) {
+        console.error("Required language selector elements not found!");
+        return;
+      }
+      this.initialize();
+    }
+    initialize() {
+      this.attachEventListeners();
+    }
+    toggleDropdown(isOpen) {
+      gsapWithCSS.to(this.languageIcon, {
+        rotation: isOpen ? 180 : 0,
+        duration: 0.4,
+        ease: "power2.out"
+      });
+      gsapWithCSS.to(this.languageBtn, {
+        backgroundColor: isOpen ? "var(--secondary--darkest)" : "var(--secondary--darker)",
+        duration: 0.3
+      });
+      if (isOpen) {
+        gsapWithCSS.set(this.languageDropdown, {
+          visibility: "visible",
+          height: 0,
+          opacity: 0
+        });
+        gsapWithCSS.to(this.languageDropdown, {
+          opacity: 1,
+          height: "auto",
+          duration: 0.5,
+          ease: "power3.out"
+        });
+      } else {
+        gsapWithCSS.to(this.languageDropdown, {
+          opacity: 0,
+          height: 0,
+          duration: 0.5,
+          ease: "power3.in",
+          onComplete: () => {
+            gsapWithCSS.set(this.languageDropdown, { visibility: "hidden" });
+          }
+        });
+      }
+    }
+    attachEventListeners() {
+      if (!this.languageBtn || !this.languageDropdown)
+        return;
+      this.languageBtn.addEventListener("mouseenter", () => {
+        var _a;
+        if (!((_a = this.languageBtn) == null ? void 0 : _a.classList.contains("clicked"))) {
+          gsapWithCSS.to(this.languageBtn, {
+            width: "4.75rem",
+            backgroundColor: "var(--secondary--darker)",
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      });
+      this.languageBtn.addEventListener("mouseleave", () => {
+        var _a;
+        if (!((_a = this.languageBtn) == null ? void 0 : _a.classList.contains("clicked"))) {
+          gsapWithCSS.to(this.languageBtn, {
+            width: "2rem",
+            backgroundColor: "var(--secondary--darker)",
+            duration: 0.3,
+            ease: "power2.in"
+          });
+        }
+      });
+      this.languageBtn.addEventListener("click", () => {
+        var _a;
+        const isClicked = (_a = this.languageBtn) == null ? void 0 : _a.classList.toggle("clicked");
+        this.toggleDropdown(!!isClicked);
+      });
+      document.addEventListener("click", (event) => {
+        var _a, _b, _c, _d, _e;
+        const target = event.target;
+        const isInside = ((_a = this.languageBtn) == null ? void 0 : _a.contains(target)) || ((_b = this.languageDropdown) == null ? void 0 : _b.contains(target));
+        const isDropdownTrigger = target.closest(".btn--nav-dropdown");
+        if (!isInside && ((_c = this.languageBtn) == null ? void 0 : _c.classList.contains("clicked")) || isDropdownTrigger && !((_d = this.languageDropdown) == null ? void 0 : _d.contains(isDropdownTrigger))) {
+          (_e = this.languageBtn) == null ? void 0 : _e.classList.remove("clicked");
+          this.toggleDropdown(false);
+          gsapWithCSS.to(this.languageBtn, {
+            width: "2rem",
+            backgroundColor: "var(--secondary--darker)",
+            duration: 0.3,
+            ease: "power2.in"
+          });
+        }
+      });
+    }
+  };
+
   // src/site.ts
   var Site = class {
     constructor() {
@@ -4692,6 +4790,7 @@
     }
     exec() {
       new Navigation();
+      new LanguageSelector();
     }
   };
 
