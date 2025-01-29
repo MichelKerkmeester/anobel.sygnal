@@ -3,35 +3,30 @@
  */
 
 import { IModule, Page } from "@sygnal/sse";
-import { Navigation } from "./components/--NAVIGATION/dropdown-menu";
-import { LanguageSelector } from "./components/--NAVIGATION/language-selector";
+import gsap from "gsap";
+import { Navigation } from "./components/--NAVIGATION/navigation";
 
-// import gsap from 'gsap'; 
- 
+// import gsap from 'gsap';
 
 export class Site implements IModule {
+  private navigation!: Navigation;
 
-  constructor() {
-  }
+  constructor() {}
 
   /**
-   * Setup code runs synchronously, inline, at the end of the </head>. 
+   * Setup code runs synchronously, inline, at the end of the </head>.
    * It's used for special init tasks that must be performed early, and which do not require
-   * the DOM to be loaded. 
+   * the DOM to be loaded.
    */
   setup() {
-
-    Page.loadEngineCSS("site.css"); 
-   
+    Page.loadEngineCSS("site.css");
   }
 
   /**
-   * Exec code runs after the DOM has processed. 
+   * Exec code runs after the DOM has processed.
    */
   exec() {
-    // Site-wide components
-    new Navigation();
-    new LanguageSelector();
+    // Initialize navigation after DOM is ready
+    this.navigation = new Navigation();
   }
-
 }

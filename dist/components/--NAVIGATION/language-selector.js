@@ -4196,19 +4196,29 @@
   // src/components/--NAVIGATION/language-selector.ts
   var LanguageSelector = class {
     constructor() {
-      this.languageBtn = document.querySelector(".language--btn-w");
-      this.languageDropdown = document.querySelector(".language--dropdown-w");
-      this.languageIcon = document.querySelector(".icon--svg.is--language");
-      if (!this.languageBtn || !this.languageDropdown || !this.languageIcon) {
-        console.error("Required language selector elements not found!");
-        return;
-      }
-      this.initialize();
+      this.languageBtn = null;
+      this.languageDropdown = null;
+      this.languageIcon = null;
+      const btn = document.querySelector(".language-btn");
+      const dropdown = document.querySelector(".language-dropdown");
+      const icon = document.querySelector(".icon-svg.is-language");
+      if (!(btn instanceof HTMLElement))
+        throw new Error("Language button not found");
+      if (!(dropdown instanceof HTMLElement))
+        throw new Error("Language dropdown not found");
+      if (!(icon instanceof SVGElement))
+        throw new Error("Language icon not found");
+      this.languageBtn = btn;
+      this.languageDropdown = dropdown;
+      this.languageIcon = icon;
+      this.init();
     }
-    initialize() {
-      this.attachEventListeners();
+    init() {
+      this.setupEventListeners();
     }
     toggleDropdown(isOpen) {
+      if (!this.languageIcon || !this.languageBtn || !this.languageDropdown)
+        return;
       gsapWithCSS.to(this.languageIcon, {
         rotation: isOpen ? 180 : 0,
         duration: 0.4,
@@ -4237,12 +4247,14 @@
           duration: 0.5,
           ease: "power3.in",
           onComplete: () => {
-            gsapWithCSS.set(this.languageDropdown, { visibility: "hidden" });
+            if (this.languageDropdown) {
+              gsapWithCSS.set(this.languageDropdown, { visibility: "hidden" });
+            }
           }
         });
       }
     }
-    attachEventListeners() {
+    setupEventListeners() {
       if (!this.languageBtn || !this.languageDropdown)
         return;
       this.languageBtn.addEventListener("mouseenter", () => {
@@ -4273,12 +4285,13 @@
         this.toggleDropdown(!!isClicked);
       });
       document.addEventListener("click", (event) => {
-        var _a, _b, _c, _d, _e;
+        if (!this.languageBtn || !this.languageDropdown)
+          return;
         const target = event.target;
-        const isInside = ((_a = this.languageBtn) == null ? void 0 : _a.contains(target)) || ((_b = this.languageDropdown) == null ? void 0 : _b.contains(target));
+        const isInside = this.languageBtn.contains(target) || this.languageDropdown.contains(target);
         const isDropdownTrigger = target.closest(".btn--nav-dropdown");
-        if (!isInside && ((_c = this.languageBtn) == null ? void 0 : _c.classList.contains("clicked")) || isDropdownTrigger && !((_d = this.languageDropdown) == null ? void 0 : _d.contains(isDropdownTrigger))) {
-          (_e = this.languageBtn) == null ? void 0 : _e.classList.remove("clicked");
+        if (!isInside && this.languageBtn.classList.contains("clicked") || isDropdownTrigger && !this.languageDropdown.contains(isDropdownTrigger)) {
+          this.languageBtn.classList.remove("clicked");
           this.toggleDropdown(false);
           gsapWithCSS.to(this.languageBtn, {
             width: "2rem",

@@ -1,9 +1,9 @@
-// Page: Home
+// Page: Diensten
 
 import { IModule } from "@sygnal/sse";
 import { Marquee } from "../components/--MARQUEE/marquee";
 
-export class HomePage implements IModule {
+export class DienstenPage implements IModule {
   private marquee!: Marquee;
 
   constructor() {}

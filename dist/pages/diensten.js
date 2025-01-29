@@ -4576,8 +4576,8 @@
     }
   };
 
-  // src/pages/home.ts
-  var HomePage = class {
+  // src/pages/diensten.ts
+  var DienstenPage = class {
     constructor() {
     }
     setup() {
@@ -4587,4 +4587,4 @@
     }
   };
 })();
-//# sourceMappingURL=home.js.map
+//# sourceMappingURL=diensten.js.map

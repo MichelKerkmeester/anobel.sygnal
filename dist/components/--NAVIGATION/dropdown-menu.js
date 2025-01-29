@@ -4194,7 +4194,7 @@
   var TweenMaxWithCSS = gsapWithCSS.core.Tween;
 
   // src/components/--NAVIGATION/dropdown-menu.ts
-  var Navigation = class {
+  var DropdownMenu = class {
     constructor() {
       this.dropdownData = [];
       this.navigation = null;
@@ -4216,9 +4216,7 @@
         const dropdownMenu = dropdown.querySelector(".nav--dropdown-menu");
         const dropdownIcon = dropdown.querySelector(".icon--svg.is--nav");
         if (!dropdownToggle || !dropdownMenu || !dropdownIcon) {
-          console.warn(
-            "Some required elements (dropdownToggle, dropdownMenu, dropdownIcon) are missing in a .nav--dropdown!"
-          );
+          console.warn("Missing required elements in dropdown");
           return null;
         }
         return {
@@ -4246,7 +4244,11 @@
         d.dropdownMenu,
         { opacity: 0, height: 0 },
         { opacity: 1, height: "auto", duration: 0.3, ease: "power2.out" }
-      ).to(d.icon, { rotation: 180, duration: 0.3, ease: "power2.out" }, "<").to(d.toggle, { backgroundColor: "var(--secondary--darkest)", duration: 0.3 }, "<");
+      ).to(d.icon, { rotation: 180, duration: 0.3, ease: "power2.out" }, "<").to(
+        d.toggle,
+        { backgroundColor: "var(--secondary--darkest)", duration: 0.3 },
+        "<"
+      );
       if (isDesktop && this.navigation) {
         tl.to(
           this.navigation,

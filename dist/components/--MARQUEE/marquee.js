@@ -4575,16 +4575,5 @@
       });
     }
   };
-
-  // src/pages/home.ts
-  var HomePage = class {
-    constructor() {
-    }
-    setup() {
-    }
-    exec() {
-      this.marquee = new Marquee();
-    }
-  };
 })();
-//# sourceMappingURL=home.js.map
+//# sourceMappingURL=marquee.js.map
