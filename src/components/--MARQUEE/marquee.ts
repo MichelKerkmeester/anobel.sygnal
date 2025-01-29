@@ -1,44 +1,42 @@
 // Marquee: Clients
 // Swiper
 
-import gsap from "gsap";
+import Swiper from "swiper";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 export class Marquee {
-  // Track all marquee instances on the page
-  private marquees: HTMLElement[] = [];
+  // Track all marquee instances
+  private swipers: Swiper[] = [];
 
   constructor() {
-    // Find all marquee elements with the correct class
-    this.marquees = Array.from(document.querySelectorAll(".marquee--track"));
+    // Find all marquee elements
+    const marqueeElements = document.querySelectorAll(".marquee--track");
 
-    if (this.marquees.length === 0) {
+    if (marqueeElements.length === 0) {
       console.warn("No marquee elements found on page");
       return;
     }
 
-    this.init();
-  }
-
-  private init(): void {
-    this.marquees.forEach((marquee) => {
-      // Get the content wrapper inside the track
-      const content = marquee.querySelector(".marquee--content");
-      if (!content) {
-        console.warn("Marquee content element not found");
-        return;
-      }
-
-      // Clone the content for infinite scroll effect
-      const clone = content.cloneNode(true);
-      marquee.appendChild(clone);
-
-      // Set up the animation
-      gsap.to(marquee, {
-        x: "-50%",
-        duration: 20,
-        repeat: -1,
-        ease: "none",
+    // Initialize each marquee with Swiper
+    marqueeElements.forEach((element) => {
+      const swiper = new Swiper(element as HTMLElement, {
+        modules: [Autoplay],
+        wrapperClass: "marquee--container", // Wrapper container class
+        slideClass: "marquee--item", // Individual slide class
+        spaceBetween: 0, // No spacing (handled by CSS)
+        allowTouchMove: false, // Disable touch/drag
+        a11y: false, // Disable a11y for decorative content
+        speed: 8000, // Animation duration in ms
+        loop: true, // Enable infinite loop
+        slidesPerView: "auto", // Auto-fit slides
+        autoplay: {
+          delay: 0, // No transition delay
+          disableOnInteraction: false, // Keep running after interaction
+        },
       });
+
+      this.swipers.push(swiper);
     });
   }
 }
