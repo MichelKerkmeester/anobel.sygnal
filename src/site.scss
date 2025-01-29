@@ -1,5 +1,4 @@
 // Import libraries
 @import 'swiper/css';
 
-// Import components
-@import "./components/--MARQUEE/marquee";
+// Remove global marquee import since it's only needed on specific pages
