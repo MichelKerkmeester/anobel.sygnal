@@ -16695,8 +16695,43 @@
     window.SSE.baseUrl = Page.getCurrentScriptBaseUrl();
   }
 
-  // src/components/--NAVIGATION/mega-menu.ts
-  var import_lottie_web = __toESM(require_lottie());
+  // src/components/--NAVIGATION/hide-nav-on-scroll.ts
+  var HideNav = class {
+    constructor() {
+      this.lastScrollTop = 0;
+      this.navbar = null;
+      this.scrollThreshold = 50;
+      this.mobileBreakpoint = 768;
+      this.handleScroll = () => {
+        if (!this.navbar)
+          return;
+        if (window.innerWidth <= this.mobileBreakpoint)
+          return;
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        if (Math.abs(this.lastScrollTop - currentScroll) <= this.scrollThreshold)
+          return;
+        if (currentScroll > this.lastScrollTop && currentScroll > 50) {
+          this.navbar.style.transform = "translateY(-200%)";
+        } else {
+          this.navbar.style.transform = "translateY(0)";
+        }
+        this.lastScrollTop = currentScroll;
+      };
+      document.addEventListener("DOMContentLoaded", () => this.init());
+    }
+    init() {
+      this.navbar = document.querySelector(".nav--bar");
+      if (!this.navbar) {
+        console.error("Navigation bar element not found!");
+        return;
+      }
+      this.navbar.style.transition = "transform 0.3s ease-in-out";
+      this.setupScrollListener();
+    }
+    setupScrollListener() {
+      window.addEventListener("scroll", this.handleScroll, { passive: true });
+    }
+  };
 
   // node_modules/gsap/gsap-core.js
   function _assertThisInitialized(self2) {
@@ -20891,128 +20926,6 @@
   var gsapWithCSS = gsap.registerPlugin(CSSPlugin) || gsap;
   var TweenMaxWithCSS = gsapWithCSS.core.Tween;
 
-  // src/components/--NAVIGATION/mega-menu.ts
-  var MegaMenu = class {
-    constructor() {
-      this.megaMenu = null;
-      this.menuButton = null;
-      this.lottieAnimation = null;
-      this.isOpen = false;
-      document.addEventListener("DOMContentLoaded", () => this.init());
-    }
-    init() {
-      this.megaMenu = document.querySelector(".nav--mega-menu");
-      this.menuButton = document.querySelector(".btn--hamburger");
-      if (!this.megaMenu || !this.menuButton) {
-        console.error("Required mega menu elements not found!");
-        return;
-      }
-      const lottieContainer = document.querySelector(".lottie--hamburger");
-      if (!lottieContainer) {
-        console.error("Lottie container not found!");
-        return;
-      }
-      this.lottieAnimation = import_lottie_web.default.loadAnimation({
-        container: lottieContainer,
-        renderer: "svg",
-        loop: false,
-        autoplay: false,
-        path: "https://cdn.prod.website-files.com/6723d26a4aa4a278cad8f59c/6777ecd6636dc4314d954783_Icon%20-%20Hamburger%20Menu.json"
-      });
-      this.setupEventListeners();
-    }
-    openMenu() {
-      if (!this.megaMenu || !this.lottieAnimation)
-        return;
-      this.megaMenu.style.display = "flex";
-      gsapWithCSS.to(this.megaMenu, {
-        duration: 0.8,
-        height: "100svh",
-        width: "100%",
-        ease: "power2.out",
-        delay: 0.2,
-        onComplete: () => {
-          if (this.megaMenu) {
-            this.megaMenu.style.borderRadius = "0rem";
-          }
-        }
-      });
-      this.lottieAnimation.playSegments([0, 70], true);
-    }
-    closeMenu() {
-      if (!this.megaMenu || !this.lottieAnimation)
-        return;
-      this.megaMenu.style.borderRadius = "1rem";
-      gsapWithCSS.to(this.megaMenu, {
-        duration: 0.4,
-        height: "0svh",
-        width: "100%",
-        ease: "power2.in",
-        onComplete: () => {
-          if (this.megaMenu) {
-            this.megaMenu.style.display = "none";
-          }
-        }
-      });
-      this.lottieAnimation.removeEventListener("complete");
-      this.lottieAnimation.playSegments([70, 140], true);
-      this.lottieAnimation.addEventListener("complete", () => {
-        this.lottieAnimation.goToAndStop(0, true);
-        this.lottieAnimation.removeEventListener("complete");
-      });
-    }
-    setupEventListeners() {
-      if (!this.menuButton)
-        return;
-      this.menuButton.addEventListener("click", () => {
-        if (!this.isOpen) {
-          this.openMenu();
-        } else {
-          this.closeMenu();
-        }
-        this.isOpen = !this.isOpen;
-      });
-    }
-  };
-
-  // src/components/--NAVIGATION/hide-nav-on-scroll.ts
-  var HideNav = class {
-    constructor() {
-      this.lastScrollTop = 0;
-      this.navbar = null;
-      this.scrollThreshold = 50;
-      this.mobileBreakpoint = 768;
-      this.handleScroll = () => {
-        if (!this.navbar)
-          return;
-        if (window.innerWidth <= this.mobileBreakpoint)
-          return;
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-        if (Math.abs(this.lastScrollTop - currentScroll) <= this.scrollThreshold)
-          return;
-        if (currentScroll > this.lastScrollTop && currentScroll > 50) {
-          this.navbar.style.transform = "translateY(-200%)";
-        } else {
-          this.navbar.style.transform = "translateY(0)";
-        }
-        this.lastScrollTop = currentScroll;
-      };
-      document.addEventListener("DOMContentLoaded", () => this.init());
-    }
-    init() {
-      this.navbar = document.querySelector(".nav--bar");
-      if (!this.navbar) {
-        console.error("Navigation bar element not found!");
-        return;
-      }
-      this.navbar.style.transition = "transform 0.3s ease-in-out";
-      this.setupScrollListener();
-    }
-    setupScrollListener() {
-      window.addEventListener("scroll", this.handleScroll, { passive: true });
-    }
-  };
-
   // src/components/--NAVIGATION/dropdown-menu.ts
   var DropdownMenu = class {
     constructor() {
@@ -21269,13 +21182,88 @@
     }
   };
 
-  // src/components/--NAVIGATION/navigation.ts
-  var Navigation = class {
+  // src/components/--NAVIGATION/mega-menu.ts
+  var import_lottie_web = __toESM(require_lottie());
+  var MegaMenu = class {
     constructor() {
-      this.megaMenu = new MegaMenu();
-      this.hideNav = new HideNav();
-      this.dropdownMenu = new DropdownMenu();
-      this.languageSelector = new LanguageSelector();
+      this.megaMenu = null;
+      this.menuButton = null;
+      this.lottieAnimation = null;
+      this.isOpen = false;
+      document.addEventListener("DOMContentLoaded", () => this.init());
+    }
+    init() {
+      this.megaMenu = document.querySelector(".nav--mega-menu");
+      this.menuButton = document.querySelector(".btn--hamburger");
+      if (!this.megaMenu || !this.menuButton) {
+        console.error("Required mega menu elements not found!");
+        return;
+      }
+      const lottieContainer = document.querySelector(".lottie--hamburger");
+      if (!lottieContainer) {
+        console.error("Lottie container not found!");
+        return;
+      }
+      this.lottieAnimation = import_lottie_web.default.loadAnimation({
+        container: lottieContainer,
+        renderer: "svg",
+        loop: false,
+        autoplay: false,
+        path: "https://cdn.prod.website-files.com/6723d26a4aa4a278cad8f59c/6777ecd6636dc4314d954783_Icon%20-%20Hamburger%20Menu.json"
+      });
+      this.setupEventListeners();
+    }
+    openMenu() {
+      if (!this.megaMenu || !this.lottieAnimation)
+        return;
+      this.megaMenu.style.display = "flex";
+      gsapWithCSS.to(this.megaMenu, {
+        duration: 0.8,
+        height: "100svh",
+        width: "100%",
+        ease: "power2.out",
+        delay: 0.2,
+        onComplete: () => {
+          if (this.megaMenu) {
+            this.megaMenu.style.borderRadius = "0rem";
+          }
+        }
+      });
+      this.lottieAnimation.playSegments([0, 70], true);
+    }
+    closeMenu() {
+      if (!this.megaMenu || !this.lottieAnimation)
+        return;
+      this.megaMenu.style.borderRadius = "1rem";
+      gsapWithCSS.to(this.megaMenu, {
+        duration: 0.4,
+        height: "0svh",
+        width: "100%",
+        ease: "power2.in",
+        onComplete: () => {
+          if (this.megaMenu) {
+            this.megaMenu.style.display = "none";
+          }
+        }
+      });
+      this.lottieAnimation.removeEventListener("complete");
+      this.lottieAnimation.playSegments([70, 140], true);
+      this.lottieAnimation.addEventListener("complete", () => {
+        this.lottieAnimation.goToAndStop(0, true);
+        this.lottieAnimation.removeEventListener("complete");
+      });
+    }
+    setupEventListeners() {
+      if (!this.menuButton)
+        return;
+      this.menuButton.addEventListener("click", () => {
+        if (!this.isOpen) {
+          this.openMenu();
+        } else {
+          this.closeMenu();
+        }
+        this.isOpen = !this.isOpen;
+      });
     }
   };
 
@@ -21287,7 +21275,10 @@
       Page.loadEngineCSS("site.css");
     }
     exec() {
-      this.navigation = new Navigation();
+      this.hideNav = new HideNav();
+      this.dropdownMenu = new DropdownMenu();
+      this.languageSelector = new LanguageSelector();
+      this.megaMenu = new MegaMenu();
     }
   };
 
