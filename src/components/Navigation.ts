@@ -3,9 +3,8 @@
  * Original inline comments and functionality have been preserved.
  */
 
-import gsap from "gsap";
-import lottie from "lottie-web";
-
+// Declare externally loaded libraries from Webflow
+declare var gsap: any;
 declare var lottie: any;
 
 /**
