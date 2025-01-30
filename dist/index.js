@@ -683,12 +683,15 @@
     }
     setup() {
       Page.loadEngineCSS("site.css");
+      console.log("Site setup called");
     }
     exec() {
+      console.log("Site exec called");
       this.navigation = new Navigation();
       this.navigation.init();
     }
   };
+  Page.register(new Site());
 
   // node_modules/swiper/shared/ssr-window.esm.mjs
   function isObject(obj) {

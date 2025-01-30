@@ -630,12 +630,15 @@
     }
     setup() {
       Page.loadEngineCSS("site.css");
+      console.log("Site setup called");
     }
     exec() {
+      console.log("Site exec called");
       this.navigation = new Navigation();
       this.navigation.init();
     }
   };
+  Page.register(new Site());
 })();
 /*! js-cookie v3.0.5 | MIT */
 //# sourceMappingURL=site.js.map

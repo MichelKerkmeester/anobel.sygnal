@@ -19,14 +19,19 @@ export class Site implements IModule {
    */
   setup() {
     Page.loadEngineCSS("site.css");
+    console.log("Site setup called");
   }
 
   /**
    * Exec code runs after the DOM has processed.
    */
   exec() {
+    console.log("Site exec called");
     // Initialize navigation globally
     this.navigation = new Navigation();
     this.navigation.init();
   }
 }
+
+// Register the Site module with Sygnal
+Page.register(new Site());
