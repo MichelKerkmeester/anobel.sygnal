@@ -656,25 +656,22 @@
   // src/site.ts
   var Site = class {
     constructor() {
-      this.scrollBehavior = new ScrollBehavior();
-      this.megaMenu = new MegaMenu();
-      this.dropdownMenu = new DropdownMenu();
-      this.languageSelector = new LanguageSelector();
     }
     setup() {
       Page.loadEngineCSS("site.css");
+      this.scrollBehavior = new ScrollBehavior();
+      this.megaMenu = new MegaMenu();
+      this.dropdownMenu = new DropdownMenu();
+      this.languageSelector = new LanguageSelector();
     }
     exec() {
-      this.scrollBehavior = new ScrollBehavior();
       this.scrollBehavior.init();
-      this.megaMenu = new MegaMenu();
       this.megaMenu.init();
-      this.dropdownMenu = new DropdownMenu();
       this.dropdownMenu.init();
-      this.languageSelector = new LanguageSelector();
       this.languageSelector.init();
     }
   };
+  Page.register(new Site());
 })();
 /*! js-cookie v3.0.5 | MIT */
 //# sourceMappingURL=site.js.map

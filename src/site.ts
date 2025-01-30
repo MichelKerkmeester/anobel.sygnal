@@ -12,37 +12,37 @@ import { LanguageSelector } from "./components/LanguageSelector";
 // import gsap from 'gsap';
 
 export class Site implements IModule {
-  private scrollBehavior: ScrollBehavior = new ScrollBehavior();
-  private megaMenu: MegaMenu = new MegaMenu();
-  private dropdownMenu: DropdownMenu = new DropdownMenu();
-  private languageSelector: LanguageSelector = new LanguageSelector();
+  private scrollBehavior: ScrollBehavior;
+  private megaMenu: MegaMenu;
+  private dropdownMenu: DropdownMenu;
+  private languageSelector: LanguageSelector;
 
   constructor() {}
 
   /**
    * Setup code runs synchronously, inline, at the end of the </head>.
-   * It's used for special init tasks that must be performed early, and which do not require
-   * the DOM to be loaded.
    */
   setup() {
     Page.loadEngineCSS("site.css");
+
+    // Pre-initialize components
+    this.scrollBehavior = new ScrollBehavior();
+    this.megaMenu = new MegaMenu();
+    this.dropdownMenu = new DropdownMenu();
+    this.languageSelector = new LanguageSelector();
   }
 
   /**
    * Exec code runs after the DOM has processed.
    */
   exec() {
-    // Initialize all components
-    this.scrollBehavior = new ScrollBehavior();
+    // Initialize all components after DOM is ready
     this.scrollBehavior.init();
-
-    this.megaMenu = new MegaMenu();
     this.megaMenu.init();
-
-    this.dropdownMenu = new DropdownMenu();
     this.dropdownMenu.init();
-
-    this.languageSelector = new LanguageSelector();
     this.languageSelector.init();
   }
 }
+
+// Register the Site module with Sygnal
+Page.register(new Site());
