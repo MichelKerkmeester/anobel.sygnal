@@ -3,16 +3,12 @@
  */
 
 import { IModule, Page } from "@sygnal/sse";
-import { HideNav } from "./components/--NAVIGATION/hide-nav-on-scroll";
-import { DropdownMenu } from "./components/--NAVIGATION/dropdown-menu";
-import { LanguageSelector } from "./components/--NAVIGATION/language-selector";
-import { MegaMenu } from "./components/--NAVIGATION/mega-menu";
+import { Navigation } from "./components/Navigation";
+
+// import gsap from 'gsap';
 
 export class Site implements IModule {
-  private hideNav!: HideNav;
-  private dropdownMenu!: DropdownMenu;
-  private languageSelector!: LanguageSelector;
-  private megaMenu!: MegaMenu;
+  private navigation: Navigation;
 
   constructor() {}
 
@@ -29,14 +25,8 @@ export class Site implements IModule {
    * Exec code runs after the DOM has processed.
    */
   exec() {
-    console.log("Site: Initializing components...");
-
-    // Initialize all navigation components
-    this.hideNav = new HideNav();
-    this.dropdownMenu = new DropdownMenu();
-    this.languageSelector = new LanguageSelector();
-    this.megaMenu = new MegaMenu();
-
-    console.log("Site: Components initialized");
+    // Initialize navigation when DOM is ready
+    this.navigation = new Navigation();
+    this.navigation.init();
   }
 }
