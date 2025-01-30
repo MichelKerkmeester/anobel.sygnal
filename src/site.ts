@@ -25,7 +25,7 @@ export class Site implements IModule {
    * Exec code runs after the DOM has processed.
    */
   exec() {
-    // Initialize navigation when DOM is ready
+    // Initialize navigation globally
     this.navigation = new Navigation();
     this.navigation.init();
   }
