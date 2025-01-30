@@ -3,8 +3,10 @@
  * Original inline comments and functionality have been preserved.
  */
 
+import gsap from "gsap";
+import lottie from "lottie-web";
+
 declare var lottie: any;
-declare var gsap: any;
 
 /**
  * Navigation component for Sygnal Framework & Webflow integration
