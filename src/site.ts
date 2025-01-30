@@ -34,8 +34,15 @@ export class Site implements IModule {
   exec() {
     // Initialize all components
     this.scrollBehavior = new ScrollBehavior();
+    this.scrollBehavior.init();
+
     this.megaMenu = new MegaMenu();
+    this.megaMenu.init();
+
     this.dropdownMenu = new DropdownMenu();
+    this.dropdownMenu.init();
+
     this.languageSelector = new LanguageSelector();
+    this.languageSelector.init();
   }
 }
