@@ -3,12 +3,19 @@
  */
 
 import { IModule, Page } from "@sygnal/sse";
-import { Navigation } from "./components/Navigation";
+
+import { ScrollBehavior } from "./components/ScrollBehavior";
+import { MegaMenu } from "./components/MegaMenu";
+import { DropdownMenu } from "./components/DropdownMenu";
+import { LanguageSelector } from "./components/LanguageSelector";
 
 // import gsap from 'gsap';
 
 export class Site implements IModule {
-  private navigation: Navigation;
+  private scrollBehavior: ScrollBehavior = new ScrollBehavior();
+  private megaMenu: MegaMenu = new MegaMenu();
+  private dropdownMenu: DropdownMenu = new DropdownMenu();
+  private languageSelector: LanguageSelector = new LanguageSelector();
 
   constructor() {}
 
@@ -19,19 +26,23 @@ export class Site implements IModule {
    */
   setup() {
     Page.loadEngineCSS("site.css");
-    console.log("Site setup called");
   }
 
   /**
    * Exec code runs after the DOM has processed.
    */
   exec() {
-    console.log("Site exec called");
-    // Initialize navigation globally
-    this.navigation = new Navigation();
-    this.navigation.init();
+    // Initialize all components
+    this.scrollBehavior = new ScrollBehavior();
+    this.scrollBehavior.init();
+
+    this.megaMenu = new MegaMenu();
+    this.megaMenu.init();
+
+    this.dropdownMenu = new DropdownMenu();
+    this.dropdownMenu.init();
+
+    this.languageSelector = new LanguageSelector();
+    this.languageSelector.init();
   }
 }
-
-// Register the Site module with Sygnal
-Page.register(new Site());

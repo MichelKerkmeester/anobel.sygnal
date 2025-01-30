@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/sygnaltech/webflow-dev-template#readme",
   "devDependencies": {
+    "@types/gsap": "^1.20.2",
     "@types/swiper": "^5.4.3",
     "esbuild": "^0.15.18",
     "prettier": "^2.7.1",
