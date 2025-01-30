@@ -660,15 +660,15 @@
     setup() {
       Page.loadEngineCSS("site.css");
       this.scrollBehavior = new ScrollBehavior();
+      this.scrollBehavior.init();
       this.megaMenu = new MegaMenu();
+      this.megaMenu.init();
       this.dropdownMenu = new DropdownMenu();
+      this.dropdownMenu.init();
       this.languageSelector = new LanguageSelector();
+      this.languageSelector.init();
     }
     exec() {
-      this.scrollBehavior.init();
-      this.megaMenu.init();
-      this.dropdownMenu.init();
-      this.languageSelector.init();
     }
   };
   Page.register(new Site());
